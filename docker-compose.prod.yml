@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+    api:
+        build:
+            context: .
+            target: base
+        container_name: react-weather-api
+        image: react-weather-api
+        command: npm start
+        ports:
+            - '8080:8080'
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        environment:
+            - NODE_ENV=production
+    redis:
+        container_name: my-redis
+        image: redis
+        network_mode: host
+        command: ['redis-server', '--appendonly', 'yes']
+        ports:
+            - '6379:6379'
