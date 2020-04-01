@@ -1,5 +1,4 @@
 const axios = require("axios");
-const moment = require("moment");
 const redis = require("redis");
 const flatten = require("flat");
 const client = redis.createClient();
