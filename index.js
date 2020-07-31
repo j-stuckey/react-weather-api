@@ -24,6 +24,20 @@ app.get('/api/weather', getWeather, (req, res) => {
     res.json({ address, currently, daily, hourly, forecast: darkskyData });
 });
 
+app.use((err, req, res, next) => {
+    console.log(err);
+    if (err.status) {
+        const errBody = Object.assign({}, err, { message: err.message });
+        // logger.error(err.message);
+        return res.status(err.status).json(errBody);
+    }
+    if (err.message) {
+        res.json({ err: err.message });
+    } else {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
 function runServer(port = 8080) {
     const server = app.listen(port, () => {
         console.info(`App listening on port ${server.address().port}`);

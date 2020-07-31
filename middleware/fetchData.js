@@ -28,7 +28,6 @@ const getWeather = async (req, res, next) => {
 };
 
 async function getDarkskyForecast(latitude, longitude) {
-
     const response = await axios(
         `https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${latitude},${longitude}`
     );
