@@ -7,7 +7,6 @@ services:
         container_name: react-weather-api
         image: react-weather-api
         command: npm start
-        network_mode: host
         ports:
             - '8080:8080'
         volumes:
@@ -15,10 +14,3 @@ services:
             - /usr/src/app/node_modules
         environment:
             - NODE_ENV=dev
-    redis:
-        container_name: my-redis
-        image: redis
-        network_mode: host
-        command: ['redis-server', '--appendonly', 'yes']
-        ports:
-            - '6379:6379'
