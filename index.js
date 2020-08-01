@@ -6,7 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-const { getWeather } = require('middleware/fetchData');
+const { getWeather, getDarkSkyData } = require('middleware/fetchData');
 
 const app = express();
 
@@ -17,6 +17,14 @@ app.use(helmet());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev'));
 
 app.get('/api/weather', getWeather, (req, res) => {
+    const { darkskyData, address } = res.locals;
+
+    const { currently, daily, hourly, minutely } = darkskyData;
+
+    res.json({ address, currently, daily, hourly, forecast: darkskyData });
+});
+
+app.get('/api/forecast', getDarkSkyData, (req, res, next) => {
     const { darkskyData, address } = res.locals;
 
     const { currently, daily, hourly, minutely } = darkskyData;
