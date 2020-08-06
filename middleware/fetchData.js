@@ -24,14 +24,16 @@ const getWeather = async (req, res, next) => {
 const getDarkSkyData = async (req, res, next) => {
     const { latitude, longitude } = req.query;
 
-    const addressResponse = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`);
+    const addressResponse = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}`
+    );
 
     const addressData = addressResponse.data;
     const address = addressData.results[0].formatted_address;
 
     const darkskyResponse = await getDarkskyForecast(latitude, longitude);
     const darkskyData = darkskyResponse.data;
-    
+
     res.locals.address = address;
     res.locals.darkskyData = darkskyData;
 
